@@ -40,6 +40,11 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'api' => [
+            'driver' => 'passport',        // <-- set ke "passport"
+            'provider' => 'users',        // <-- set ke "donaturs"
+            'hash' => false,
+        ],
     ],
 
     /*

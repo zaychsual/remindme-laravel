@@ -6,7 +6,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
+// use Laravel\Sanctum\HasApiTokens;
+use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable
 {
@@ -42,4 +43,21 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    /**
+     * payload
+     *
+     * @param Request $request
+     * @return array
+     */
+    public function rawPayload($request): array
+    {
+        $payload['name']      = $request->name;
+        $payload['email']     = $request->email;
+        if ($request->has('password')) {
+            $payload['password']  = bcrypt($request->password);
+        }
+
+        return $payload;
+    }
 }
